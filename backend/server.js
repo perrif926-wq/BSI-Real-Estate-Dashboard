@@ -1,16 +1,24 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs').promises;
 const path = require('path');
+const { Pool } = require('pg');
 
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.join(__dirname, '..')));
 
-const DATA_FILE = path.join(__dirname, 'data', 'properties.json');
 const EDIT_KEY = process.env.EDIT_KEY || '';
+
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL environment variable is required');
+}
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 
 function requireEditKey(req, res, next) {
   if (!EDIT_KEY) return next();
@@ -19,18 +27,16 @@ function requireEditKey(req, res, next) {
 }
 
 async function readData() {
-  try {
-    const raw = await fs.readFile(DATA_FILE, 'utf8');
-    return JSON.parse(raw || '[]');
-  } catch (err) {
-    if (err.code === 'ENOENT') return [];
-    throw err;
-  }
+  const { rows } = await pool.query('SELECT data FROM properties_store WHERE id = 1');
+  return rows[0]?.data || [];
 }
 
 async function writeData(data) {
-  await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
-  await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+  await pool.query(
+    `INSERT INTO properties_store (id, data) VALUES (1, $1)
+     ON CONFLICT (id) DO UPDATE SET data = $1`,
+    [JSON.stringify(data)]
+  );
 }
 
 app.get('/api/properties', async (req, res) => {

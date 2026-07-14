@@ -4,3 +4,5 @@ __pycache__/
 .env
 /data/*.csv
 node_modules/
+PASSWORD*.txt
+*password*.txt
