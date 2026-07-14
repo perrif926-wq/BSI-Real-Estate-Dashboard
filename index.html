@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real Estate Portfolio Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <img id="brandLogo" src="logo.svg" alt="Company logo" class="brand-logo" />
+          <div>
+            <p class="eyebrow">Portfolio overview</p>
+            <h1>Real Estate Dashboard</h1>
+            <p class="subtitle">Track income, expenses, occupancy, and performance for every property in one polished view.</p>
+            <div class="hero-badges">
+              <span>Live-ready</span>
+              <span>Shared access friendly</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <label class="button ghost" for="csvImport">Import CSV</label>
+          <input id="csvImport" type="file" accept=".csv" hidden />
+          <button id="exportCsv" class="button primary">Export CSV</button>
+          <div class="logo-actions">
+            <button id="changeLogo" class="button ghost small" type="button">Change logo</button>
+            <button id="resetLogo" class="button secondary small" type="button">Reset logo</button>
+            <input id="logoUpload" type="file" accept="image/*" hidden />
+          </div>
+          <input id="propertyPhotoUpload" type="file" accept="image/*" multiple hidden />
+        </div>
+      </header>
+
+      <section class="toolbar">
+        <div class="filter-group">
+          <input id="searchInput" type="search" placeholder="Search properties" />
+          <select id="typeFilter">
+            <option value="all">All property types</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Mixed Use">Mixed Use</option>
+            <option value="Vacation">Vacation</option>
+          </select>
+          <select id="occupancyFilter">
+            <option value="all">Any occupancy</option>
+            <option value="90">90%+ occupied</option>
+            <option value="80">80%+ occupied</option>
+            <option value="70">70%+ occupied</option>
+          </select>
+        </div>
+        <button id="resetFilters" class="button secondary small">Reset filters</button>
+      </section>
+
+      <section class="metrics-grid" id="metricsGrid"></section>
+
+      <section class="content-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Performance snapshot</h2>
+              <p class="panel-subtitle">Quick view of rent and occupancy health.</p>
+            </div>
+          </div>
+          <div class="chart-grid">
+            <div class="chart-card">
+              <h3>Monthly rent by property</h3>
+              <svg id="rentChart" class="chart" viewBox="0 0 320 180"></svg>
+            </div>
+            <div class="chart-card">
+              <h3>Occupancy by property</h3>
+              <svg id="occupancyChart" class="chart" viewBox="0 0 320 180"></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Add or edit a property</h2>
+              <p class="panel-subtitle">Keep the portfolio data current for your boss.</p>
+            </div>
+            <button id="clearFormButton" class="text-button" type="button">Clear</button>
+          </div>
+          <form id="propertyForm" class="property-form">
+            <input type="hidden" name="id" />
+            <div class="form-row">
+              <label>Property name<input name="property_name" required /></label>
+              <label>Address<input name="address" required /></label>
+            </div>
+            <div class="form-row">
+              <label>Property type<select name="property_type">
+                <option>Residential</option>
+                <option>Commercial</option>
+                <option>Mixed Use</option>
+                <option>Vacation</option>
+              </select></label>
+              <label>Acquisition date<input type="date" name="acquisition_date" /></label>
+            </div>
+            <div class="form-row">
+              <label>Purchase price<input type="number" name="purchase_price" min="0" step="1000" required /></label>
+              <label>Monthly rent<input type="number" name="monthly_rent" min="0" step="100" required /></label>
+            </div>
+            <div class="form-row">
+              <label>Mortgage balance<input type="number" name="mortgage_balance" min="0" step="1000" /></label>
+              <label>Monthly mortgage payment<input type="number" name="monthly_mortgage_payment" min="0" step="50" /></label>
+            </div>
+            <div class="form-row">
+              <label>Annual expenses<input type="number" name="annual_expenses" min="0" step="100" /></label>
+              <label>Occupancy rate (%)<input type="number" name="occupancy_rate" min="0" max="100" step="1" value="100" /></label>
+            </div>
+            <label>Notes<textarea name="notes" rows="3"></textarea></label>
+            <div class="form-actions">
+              <button class="button primary" type="submit">Save property</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="content-grid lower-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Property list</h2>
+              <p class="panel-subtitle">Filter by type or occupancy and inspect any property.</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Property</th>
+                  <th>Address</th>
+                  <th>Type</th>
+                  <th>Rent</th>
+                  <th>Occupancy</th>
+                  <th>NOI</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="propertiesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel detail-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Property detail</h2>
+              <p class="panel-subtitle">A focused view of the selected property.</p>
+            </div>
+          </div>
+          <div id="detailPanel" class="detail-panel-body"></div>
+        </div>
+      </section>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

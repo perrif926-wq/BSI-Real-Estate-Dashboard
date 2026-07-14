@@ -1,0 +1,14 @@
+property_name,address,type,purchase_price,monthly_rent,mortgage_balance,monthly_mortgage_payment,annual_expenses,occupancy,acquisition_date,notes
+Birch Office,"735 Birch Avenue, Bensalem, PA",Office/Industrial,,,,,,100,,Current BSI and Bustleton main office. Co-owned by Duff Family
+520 State,"520 State Road, Bensalem, PA",Office,,,,,,,,
+Black Lake,"2705 Black Lake Place, Philadelphia, PA",Commercial,,,,,,,,
+Black Lake (Amazon),"2703 Black Lake Place, Philadelphia, PA",IOS,4200000,21900,3050000,,,100,12/13/2024,
+Fellowship,"538 Fellowship Road, Mount Laurel, NJ",IOS,4250000,87500,0,0,,100,10/9/2024,
+Addisville Commons,"890 2nd Street Pike, Richboro, PA",Retail,,,,,,,,
+De La Salle,"1265 Street Road, Bensalem, PA",Commercial,,,,,,,,
+Neshaminy Office,"773 American Drive, Bensalem, PA",Office,,,,,,,,
+Damar,"13420 Damar Drive, Philadelphia, PA",Commercial,,,,,,,,
+Mermaid Lane,"1300 Mermaid Lane, Ardsley, PA",Commercial,,,,,,,,
+Swanson Street,"2415 Swanson Street, Philadelphia, PA",Commercial,,,,,,,,
+New BSI Office,"3330 Tillman Drive, Bensalem, PA",Office,,,,,,,,
+Bristol Road Commons,"650 Bristol Pike, Bensalem, PA",Retail,,,,,,,,
