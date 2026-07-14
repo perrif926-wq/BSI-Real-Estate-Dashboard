@@ -172,30 +172,16 @@ async function loadProperties() {
   }
 }
 
-function getEditKey() {
-  return localStorage.getItem('edit_key') || '';
-}
-
 async function saveProperties() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(properties));
 
   if (API_URL) {
     try {
-      const response = await fetch(API_URL, {
+      await fetch(API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-edit-key': getEditKey() },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(properties)
       });
-      if (response.status === 401) {
-        const key = window.prompt('Enter your edit access key to save changes for everyone:');
-        if (key) {
-          localStorage.setItem('edit_key', key);
-          return saveProperties();
-        }
-        window.alert('Not saved to the shared dashboard: a valid edit key is required.');
-      } else if (!response.ok) {
-        console.warn('Cloud sync failed with status', response.status);
-      }
     } catch (error) {
       console.warn('Cloud sync failed.', error);
     }
