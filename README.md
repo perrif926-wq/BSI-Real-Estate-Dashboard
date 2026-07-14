@@ -2,6 +2,8 @@
 
 A simple Streamlit dashboard for tracking real estate properties and their performance.
 
+The live shared dashboard (static frontend + Node/Postgres backend in `backend/`) is deployed at https://bsi-real-estate-dashboard.onrender.com/.
+
 ## Features
 
 - Add properties manually through a form
